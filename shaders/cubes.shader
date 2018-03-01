@@ -1,2 +1,2 @@
-shaders/dx11/cubes.vs
-shaders/dx11/cubes.fs
+shaders/raw/cubes/cubes.vsr
+shaders/raw/cubes/cubes.fsr
