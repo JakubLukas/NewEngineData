@@ -34,8 +34,8 @@ echo Original: %originalFile%
 echo Compiled: %compiledFile%
 echo VaryingDef: %varDefFile%
 
-set file=./shaders/raw/cubes/cubes.fsr
-set fileOut=./shaders/raw/cubes/cubes.fbin
-set varDef=./shaders/raw/cubes/varying.def
+if not exist %compiledPath% (
+mkdir %compiledPath%
+)
 
 "./external/bgfx/shadercDebug.exe" -f %originalFile% -o %compiledFile% -i %shaderRoot% --platform %platform% --varyingdef %varDefFile% --type %type% --profile %profile%
