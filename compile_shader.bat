@@ -26,7 +26,7 @@ set profile="ps_4_0"
 
 set compiledPath=%path:shaders\raw=shaders\compiled%
 set compiledFile=%compiledPath%%name%%compExt%
-set varDefFile=%path%varying.def
+set varDefFile=%shaderRoot%common/varying.def
 
 echo Type of shader: %type%
 echo Profile: %profile%
@@ -38,4 +38,4 @@ if not exist %compiledPath% (
 mkdir %compiledPath%
 )
 
-"./external/bgfx/shadercDebug.exe" -f %originalFile% -o %compiledFile% -i %shaderRoot% --platform %platform% --varyingdef %varDefFile% --type %type% --profile %profile%
+"./external/bgfx/shadercDebug.exe" -f %originalFile% -o %compiledFile% -i %shaderRoot%common/ --platform %platform% --varyingdef %varDefFile% --type %type% --profile %profile%
