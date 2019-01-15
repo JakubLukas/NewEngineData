@@ -1,2 +1,6 @@
-shaders/cubes.shader
-materials/debug.tga
+{
+	"shader": "shaders/cubes.shader",
+	"textures": {
+		"diffuse": "materials/debug.tga"
+	}
+}
