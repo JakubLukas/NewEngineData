@@ -1,0 +1,11 @@
+{
+	"framebuffers": {
+		"main": { "width": 100, "height": 100, "screen_size": false }
+	},
+	"render": [
+		{ "new_view": {} },
+		{ "clear": {} },
+		{ "set_frame_buffer": { "name": "main" } },
+		{ "render_models": { "world": 1 } }
+	]
+}
