@@ -1,7 +1,6 @@
 {
 	"varyings": [
 		"position",
-		"color0",
 		"texcoord0"
 	],
 	"uniforms": [],
@@ -9,6 +8,6 @@
 		"diffuse"
 	],
 
-	"vertexShader": "shaders/raw/cubes/cubes.vsr",
+	"vertexShader": "shaders/raw/sphere/sphere.vsr",
 	"fragmentShader": "shaders/raw/sphere/sphere.fsr"
 }

@@ -1,5 +1,5 @@
 {
-	"shader": "shaders/cubes.shader",
+	"shader": "shaders/sphere.shader",
 	"textures": {
 		"diffuse": "materials/debug.tga"
 	}
