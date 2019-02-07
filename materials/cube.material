@@ -1,6 +1,7 @@
 {
 	"shader": "shaders/cubes.shader",
 	"textures": {
-		"diffuse": "materials/debug.tga"
+		"t_diffuse": "materials/debug.tga",
+		"t_color": "materials/debug_gradient.tga"
 	}
 }

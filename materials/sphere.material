@@ -1,6 +1,6 @@
 {
 	"shader": "shaders/sphere.shader",
 	"textures": {
-		"diffuse": "materials/debug.tga"
+		"t_diffuse": "materials/debug.tga"
 	}
 }

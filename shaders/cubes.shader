@@ -6,7 +6,8 @@
 	],
 	"uniforms": [],
 	"textures": [
-		"diffuse"
+		"t_diffuse",
+		"t_color"
 	],
 
 	"vertexShader": "shaders/raw/cubes/cubes.vsr",
