@@ -4,7 +4,14 @@ $input v_texcoord0
 
 SAMPLER2D(t_diffuse, 0);
 
+struct DirectionalLight
+{
+	vec4 direction;
+};
+uniform DirectionalLight u_directionalLight[1];
+
 void main()
 {
+//u_modelView
 	gl_FragColor = texture2D(t_diffuse, v_texcoord0);
 }
