@@ -1,7 +1,8 @@
 {
 	"varyings": [
 		"position",
-		"texcoord0"
+		"texcoord0",
+		"normal"
 	],
 	"uniforms": [],
 	"textures": [
