@@ -4,11 +4,12 @@ $input v_texcoord0, v_normal
 
 SAMPLER2D(t_diffuse, 0);
 
-uniform vec4 u_directionalLight[1];
+uniform vec4 u_directionalLightPos[1];
+uniform vec4 u_directionalLightColor[1];
 
 void main()
 {
-	vec4 viewDirLight = mul(u_view, -u_directionalLight[0]);
+	vec4 viewDirLight = mul(u_view, -u_directionalLightPos[0]);
 	float diffuse = dot(viewDirLight, vec4(v_normal, 0));
 	gl_FragColor = vec4(diffuse, diffuse, diffuse, 1);//texture2D(t_diffuse, v_texcoord0);
 }
