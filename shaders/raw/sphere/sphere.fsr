@@ -7,8 +7,6 @@ SAMPLER2D(t_diffuse, 0);
 uniform vec4 u_directionalLightPos[1];
 uniform vec4 u_directionalLightColor[1];
 
-const float shininess = 0.1;
-
 vec4 UnpackColor(float color)
 {
 	const float invByte = 1.0 / 256.0;
@@ -21,20 +19,21 @@ vec4 UnpackColor(float color)
 
 void main()
 {
+	const float shininess = 16.0;
+
 	vec4 viewDir = normalize(-v_position);
 	vec4 viewDirLight = mul(u_view, -u_directionalLightPos[0]);
 	vec4 halfwayDir = normalize(viewDirLight + viewDir);
 	
 	float diffuse = max(dot(viewDirLight, vec4(v_normal, 0)), 0.0);
-	float specular = dot(v_normal, halfwayDir);//pow(max(dot(v_normal, halfwayDir), 0.0), shininess);
+	float specular = pow(max(dot(v_normal, halfwayDir), 0.0), shininess);
 	
 	vec4 lightColorDiff = UnpackColor(u_directionalLightColor[0].x);
 	vec4 lightColorSpec = UnpackColor(u_directionalLightColor[0].y);
 	
 	vec4 matColorDiff = texture2D(t_diffuse, v_texcoord0);
-	vec4 matColorSpec = vec4(1, 0, 0, 1);
+	vec4 matColorSpec = vec4(1, 1, 1, 1);
 	
-	//gl_FragColor = diffuse /** matColorDiff*/ * lightColorDiff + specular * matColorSpec * lightColorSpec;
-	gl_FragColor = vec4(specular, specular, specular, 1);
-	//gl_FragColor = diffuse * matColorDiff * lightColorDiff;
+	//gl_FragColor = mix((0.2 + diffuse) * matColorDiff * lightColorDiff, specular * matColorSpec * lightColorSpec, 0.5);
+	gl_FragColor = /*(0.2 + diffuse) * matColorDiff * lightColorDiff +*/ specular * matColorSpec * lightColorSpec;
 }
