@@ -27,17 +27,17 @@ void main()
 	vec4 viewDir = vec4(0, 0, -1, 0);
 	vec4 lightDir = normalize(-u_directionalLightPos[0]);
 	vec4 halfwayDir = normalize(lightDir + viewDir);
-	
+
 	float diffuse = max(dot(lightDir, vec4(v_normal, 0)), 0.0);
 	float specular = pow(max(dot(v_normal, halfwayDir), 0.0), shininess);
-	
+
 	vec4 lightColorDiff = UnpackColor(u_directionalLightColor[0].x);
 	vec4 lightColorSpec = UnpackColor(u_directionalLightColor[0].y);
-	
+
 	vec4 matColorDiff = texture2D(t_diffuse, v_texcoord0);
 	vec4 matColorSpec = vec4(1, 1, 1, 1);
 	
 	//gl_FragColor = mix((0.2 + diffuse) * matColorDiff * lightColorDiff, specular * matColorSpec * lightColorSpec, 0.5);
-	//gl_FragColor = /*(0.2 + diffuse) * matColorDiff * lightColorDiff +*/ specular * matColorSpec * lightColorSpec;
-	gl_FragColor = vec4(v_normal, 1);//diffuse * matColorDiff * lightColorDiff;
+	gl_FragColor = (0.2 + diffuse) * matColorDiff * lightColorDiff + specular * matColorSpec * lightColorSpec;
+	//gl_FragColor = vec4(diffuse, diffuse, diffuse, 1);//diffuse * matColorDiff * lightColorDiff;
 }
