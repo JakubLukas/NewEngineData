@@ -1,7 +1,7 @@
 {
-	"shader": "shaders/cubes.shader",
+	"shader": "shaders/cube.shader",
 	"textures": {
-		"t_diffuse": "materials/debug.tga",
-		"t_color": "materials/debug_gradient.tga"
+		"t_diffuse": "materials/brickwall.tga",
+		"t_normal": "materials/brickwall_normal.tga"
 	}
 }

@@ -4,32 +4,18 @@ $input v_position, v_texcoord0, v_normal
 
 SAMPLER2D(t_diffuse, 0);
 
-uniform vec4 u_directionalLightPos[1];
+uniform vec4 u_directionalLightDir[1];
 uniform vec4 u_directionalLightColor[1];
 
 uniform vec4  u_cameraPos;
 
-vec4 UnpackColor(float color)
-{
-	const float invByte = 1.0 / 256.0;
-	unsigned int c = floatBitsToUint(color);
-	return vec4(((c) & 0xFF) * invByte,
-		((c >> 8) & 0xFF) * invByte,
-		((c >> 16) & 0xFF) * invByte,
-		((c >> 24) & 0xFF) * invByte);
-}
 
 void main()
 {
 	const float shininess = 16.0;
 
-	//vec4 viewDir = normalize(-v_position);
-	vec4 viewDir = vec4(0, 0, -1, 0);
-	vec4 lightDir = normalize(-u_directionalLightPos[0]);
-	vec4 halfwayDir = normalize(lightDir + viewDir);
-
-	float diffuse = max(dot(lightDir, vec4(v_normal, 0)), 0.0);
-	float specular = pow(max(dot(v_normal, halfwayDir), 0.0), shininess);
+	vec4 viewDir = normalize(vec4(u_cameraPos.xyz, 1) - v_position) * u_cameraPos.w + mul(u_invView, vec4(0, 0, -1, 0)) * (1 - u_cameraPos.w);
+	vec4 lightDir = normalize(-vec4(u_directionalLightDir[0].xyz, 0));
 
 	vec4 lightColorDiff = UnpackColor(u_directionalLightColor[0].x);
 	vec4 lightColorSpec = UnpackColor(u_directionalLightColor[0].y);
@@ -37,7 +23,7 @@ void main()
 	vec4 matColorDiff = texture2D(t_diffuse, v_texcoord0);
 	vec4 matColorSpec = vec4(1, 1, 1, 1);
 	
-	//gl_FragColor = mix((0.2 + diffuse) * matColorDiff * lightColorDiff, specular * matColorSpec * lightColorSpec, 0.5);
-	gl_FragColor = (0.2 + diffuse) * matColorDiff * lightColorDiff + specular * matColorSpec * lightColorSpec;
-	//gl_FragColor = vec4(diffuse, diffuse, diffuse, 1);//diffuse * matColorDiff * lightColorDiff;
+	vec4 color = ComputeBlinnPhong(vec4(v_normal, 0), viewDir, lightDir, lightColorDiff, lightColorSpec, matColorDiff, matColorSpec, shininess);
+	
+	gl_FragColor = color;
 }

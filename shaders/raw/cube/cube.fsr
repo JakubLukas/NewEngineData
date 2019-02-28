@@ -1,0 +1,39 @@
+$input v_position, v_color0, v_texcoord0, v_normal, v_tangent, v_binormal
+
+#include "common.sh"
+
+SAMPLER2D(t_diffuse, 0);
+SAMPLER2D(t_normal, 1);
+
+uniform vec4 u_directionalLightDir[1];
+uniform vec4 u_directionalLightColor[1];
+
+uniform vec4  u_cameraPos;
+
+
+void main()
+{
+	const float shininess = 64.0;
+	
+	vec4 normal = normalize(vec4(v_normal, 0));
+	vec4 tangent = vec4(v_tangent, 0);
+	vec4 binormal = vec4(v_binormal, 0);
+	mat4 TBN = mat4(tangent, binormal, normal, vec4(0,0,0,0));
+	
+	vec4 n = texture2D(t_normal, v_texcoord0);
+	n = normalize(n * 2.0 - 1.0);   
+	n = normalize(mul(TBN, n));
+
+	vec4 viewDir = normalize(vec4(u_cameraPos.xyz, 1) - v_position) * u_cameraPos.w + mul(u_invView, vec4(0, 0, -1, 0)) * (1 - u_cameraPos.w);
+	vec4 lightDir = -u_directionalLightDir[0];
+
+	vec4 lightColorDiff = UnpackColor(u_directionalLightColor[0].x);
+	vec4 lightColorSpec = UnpackColor(u_directionalLightColor[0].y);
+
+	vec4 matColorDiff = texture2D(t_diffuse, v_texcoord0);
+	vec4 matColorSpec = vec4(0.2, 0.2, 0.2, 1);
+	
+	vec4 color = ComputeBlinnPhong(n, viewDir, lightDir, lightColorDiff, lightColorSpec, matColorDiff, matColorSpec, shininess);
+	
+	gl_FragColor = color;
+}
