@@ -6,6 +6,7 @@
 		{ "new_view": {} },
 		{ "clear": {} },
 		{ "set_frame_buffer": { "name": "main" } },
-		{ "render_models": { "world": 0 } }
+		{ "render_models": { "world": 0 } },
+		{ "render_debug": {} }
 	]
 }
